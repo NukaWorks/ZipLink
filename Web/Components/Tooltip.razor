@@ -32,27 +32,8 @@
         var tooltipSize = await JS.InvokeAsync<BoundingRect>("getTooltipSize");
         var viewportSize = await JS.InvokeAsync<BoundingRect>("getViewportSize");
 
-        // Start with default position below anchor
         var top = anchorRect.Bottom + 8;
-        var left = anchorRect.Left;
-
-        // Flip above if it overflows bottom
-        if (top + tooltipSize.Height > viewportSize.Height)
-        {
-            top = anchorRect.Top - tooltipSize.Height - 8;
-        }
-
-        // Shift left if overflowing right edge
-        if (left + tooltipSize.Width > viewportSize.Width)
-        {
-            left = viewportSize.Width - tooltipSize.Width - 8;
-        }
-
-        // Prevent overflow on the left edge
-        if (left < 8)
-        {
-            left = 8;
-        }
+        var left = anchorRect.Left + 5;
 
         PositionStyle = $"position: absolute; top: {top}px; left: {left}px;";
         StateHasChanged();
@@ -61,11 +42,6 @@
     public void Toggle()
     {
         IsOpened = !IsOpened;
-
-        // if (IsOpened)
-        // {
-        //     JS.InvokeVoidAsync("registerResizeHandler", DotNetObjectReference.Create(this));
-        // }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

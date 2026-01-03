@@ -43,12 +43,14 @@ window.getViewportSize = () => {
     window.registerResizeHandler = (dotNetRef) => {
         if (resizeHandler) {
             window.removeEventListener("resize", resizeHandler);
-        }
-
+            window.removeEventListener("mouseover", resizeHandler);
+        } 
+           
         resizeHandler = () => {
             dotNetRef.invokeMethodAsync("UpdateTooltipPosition");
         };
 
         window.addEventListener("resize", resizeHandler);
+        window.addEventListener("mouseover", resizeHandler);
     };
 })();
